@@ -1,0 +1,23 @@
+import React, { useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import './AddtoCart.css'
+import AfterCart from './AfterCart'
+import BeforeCart from './BeforeCart'
+
+const CartButtons = ({product}) => {
+    const { cartList }  = useSelector((state) => state.cart)
+
+    const findItemCount = useMemo(()=>{
+        return (cartList.find(item => item?.id === product?.id))?.count
+    },[cartList]) 
+    
+  return (
+    <>
+    {
+        findItemCount > 0 ?  <AfterCart productId={product.id} count={findItemCount}/> : <BeforeCart product={product}/>
+    }
+    </>
+  )
+}
+
+export default CartButtons
